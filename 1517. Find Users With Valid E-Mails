@@ -1,0 +1,23 @@
+DROP TABLE IF EXISTS Users;
+
+create table Users (
+User_id integer,
+name VARCHAR(10),
+mail VARCHAR(40));
+
+insert into Users values
+(1,'Rahul','Rahul@leetcode.com')
+,(2,'Shilpa','jonathanisgreat')
+,(3,'Ramesh','bella-@leetcode.com')
+,(4,'Katrina','sally.come@leetcode.com')
+,(5,'Alia','quarz#2020@leetcode.com')
+ ;
+
+//My SQL
+select * from Users where  
+REGEXP_LIKE (mail ,'^[A-Za-z][a-zA-Z0-9._-]*@leetcode[.]com$' )
+
+//MY SQL Server
+SELECT*FROM Users
+WHERE mail LIKE '[a-zA-Z]%@leetcode.com' 
+AND LEFT(mail, LEN(mail) - 13) NOT LIKE '%[^0-9a-zA-Z_.-]%'
