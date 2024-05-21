@@ -1,0 +1,38 @@
+DROP TABLE IF EXISTS Transactions;
+
+create table Transactions (
+transaction_id integer,
+visit_id integer,
+amount integer);
+
+insert into Transactions values
+(2,5,310)
+,(3,5,300)
+,(9,5,200)
+,(12,1,910)
+,(13,2,970)
+;
+
+Select customer_id,count(customer_id) as count_no_trans from(select V.customer_id from visits V
+full join Transactions T
+on V.Visit_id=T.visit_id
+where T.transaction_id is NULL)X
+group by customer_id
+
+
+SELECT customer_id,
+    COUNT(visit_id) AS count_no_trans
+FROM Visits
+WHERE visit_id 
+    NOT IN(
+        SELECT visit_id FROM Transactions              
+    )
+GROUP BY customer_id
+
+
+  SELECT customer_id,
+       COUNT(*) as count_no_trans
+FROM Visits 
+LEFT JOIN Transactions ON Visits.visit_id = Transactions.visit_id
+WHERE Transactions.visit_id IS NULL
+GROUP BY customer_id
