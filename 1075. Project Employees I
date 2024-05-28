@@ -1,0 +1,34 @@
+DROP TABLE IF EXISTS Project;
+create table Project (
+Project_id integer,
+employee_id integer);
+
+DROP TABLE IF EXISTS Employee;
+create table Employee (
+employee_id integer,
+name varchar(20),
+experience_years integer);
+
+
+insert into Project values
+(1,1)
+,(1,2)
+,(1,3)
+,(2,1)
+,(2,4)
+;
+
+select * from Project
+select * from Employee
+insert into Employee values
+(1,'Khaled',3)
+,(2,'Ali',2)
+,(3,'John',1)
+,(4,'Doe',2)
+;
+
+select P.project_id,Round(cast(SUM(E.experience_years*1.0)/Count(P.project_id*1.0) as decimal(10,2)),2) as average_years
+from Project P 
+left join Employee E 
+on P.employee_id=E.employee_id
+group by P.project_id
