@@ -1,0 +1,25 @@
+DROP TABLE IF EXISTS Queries;
+create table Query (
+Query_name varchar(5),
+result varchar(30),
+position integer,
+rating integer);
+
+insert into Queries values
+('dog','Golden Retriever',1,5),
+('dog','German shepherd',2,5),
+('dog','Mule',200,1),
+('cat','Shirazi',5,2),
+('cat','Siamese',3,3),
+('cat','Sphynx',7,4);
+
+select query_name,cast(sum(unit_quality)/count(Query_name) as decimal(5,2)) as quality,
+cast((cast(sum(Poor_quality) as decimal(5,2))/count(Poor_quality))*100 as decimal(5,2)) as poor_query_Percentage from
+(select query_name,rating,
+cast(cast(rating as decimal(5,2))/cast(position as decimal(5,2)) as decimal(5,4)) as unit_quality,
+case when rating<3 then 1
+else 0
+end as Poor_quality
+from Queries)x
+group by query_name
+having query_name is not null
