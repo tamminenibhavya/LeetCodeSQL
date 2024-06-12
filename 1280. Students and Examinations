@@ -1,0 +1,51 @@
+DROP TABLE IF EXISTS Students;
+create table Students (
+student_id integer,
+student_name varchar(20)
+);
+insert into Students values
+(1,'Alice'),
+(2,'Bob'),
+(13,'John'),
+(6,'Alex');
+
+DROP TABLE IF EXISTS Subjects;
+create table Subjects (
+subject_name varchar(25)
+);
+insert into Subjects values
+('Math'),
+('Physics'),
+('Programming');
+
+DROP TABLE IF EXISTS Examinations;
+create table Examinations (
+student_id integer,
+subject_name varchar(20)
+);
+insert into Examinations values
+(1,'Math'),
+(1,'Physics'),
+(1,'Programming'),
+(2,'Programming'),
+(1,'Physics'),
+(1,'Math'),
+(13,'Math'),
+(13,'Programming'),
+(13,'Physics'),
+(2,'Math'),
+(1,'Math');
+
+SELECT 
+    s.student_id,
+    s.student_name,
+    sj.subject_name,
+    COUNT(e.student_id) as 'attended_exams'
+FROM Students s CROSS JOIN Subjects sj
+
+LEFT JOIN Examinations e
+ON      s.student_id = e.student_id 
+and sj.subject_name =e.subject_name 
+
+GROUP BY s.student_id,s.student_name, sj.subject_name
+ORDER BY s.student_id, sj.subject_name;
