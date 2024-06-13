@@ -1,0 +1,8 @@
+select machine_id,round(avg(Process_time),3) as processing_time from
+(select
+    machine_id,
+    lead(timestamp) over (partition by machine_id,process_id order by machine_id,process_id,timestamp)-timestamp as     Process_time
+    from 
+    Activity) x
+    group by machine_id
+order by machine_id
